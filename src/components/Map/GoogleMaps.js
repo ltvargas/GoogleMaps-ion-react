@@ -16,23 +16,17 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-//npm i use-places.autocomplete
-//npm i @reach/combobox
 import "./style.css";
 import  GoogleMapStyle from "./GoogleMapSytle"
-import  imglogo from "./recursos/logo.png"
 import ubicacion from './recursos/ubicacion.png'
-// npm install --save-dev @iconify/react @iconify/icons-ion
 import { Icon} from '@iconify/react';
 import locateIcon from '@iconify/icons-ion/locate';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { IonLoading } from '@ionic/react';
 const libraries = ["places"];
 const GoogleMaps= (props) => {
-  const { center, getGeoLocation, loading, maker1,setMaker1 } = props
+const { center, getGeoLocation, loading, maker1,setMaker1 } = props
 
-
-  
 //Cargar
 const { isLoaded, loadError } = useLoadScript({
   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
@@ -44,10 +38,6 @@ const [marker, setMarker] = React.useState([ {
   lng: 0,
   time: new Date(),
 } ]);
-
-//coordenadas iniciales
-
-
 
 const onMarkerDragEnd = (coord) => {
   if (coord && coord.latLng) {
@@ -70,15 +60,7 @@ const mapContainer = {
 const options = {
   styles: GoogleMapStyle,
   disableDefaultUI: true,
-
- // streetViewControl: true,
- // rotateControl: true,
- // fullscreenControl: true,
-   // zoomControl: true,
-  //mapTypeControl: true,
 };
-
-
 
 const ChangeCoord=( lat, lng ) => {
   setMaker1(  lat,lng)
@@ -117,11 +99,7 @@ useEffect(() => {
   return (
     <>
  
-    
     <div>
-    <h1>
-      <img className="logoimg"src={imglogo} alt="logoTome" />  
-    </h1>
  
     <Search panTo={panTo} ChangeCoord={ChangeCoord}/>
     <Locate panTo={panTo} ChangeCoord={ChangeCoord} />

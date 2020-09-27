@@ -6,7 +6,7 @@ const LocationService = {
         return await new Promise((resolve, reject) => {
             LocationAccuracy.canRequest().then((canRequest: boolean) => {
                 if (canRequest) {
-                    // the accuracy option will be ignored by iOS
+                    // iOS ignorará la opción de accuracy
                     LocationAccuracy.request(LocationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
                         () => {
                             resolve(true);
@@ -19,17 +19,17 @@ const LocationService = {
         })
     },
 
-    // Check if application having GPS access permission
+    // comprobar permisos de acceso al GPS
     checkGPSPermission: async (): Promise<boolean> => {
         return await new Promise((resolve, reject) => {
             if (Capacitor.isNative) {
                 AndroidPermissions.checkPermission(AndroidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
                     result => {
                         if (result.hasPermission) {
-                            // If having permission show 'Turn On GPS' dialogue
+                            // muestre el diálogo 'Activar GPS'
                             resolve(true);
                         } else {
-                            // If not having permission ask for permission
+                            // pedir permiso
                             resolve(false);
                         }
                     },
@@ -46,19 +46,19 @@ const LocationService = {
                 if (canRequest) {
                     resolve('CAN_REQUEST');
                 } else {
-                    // Show 'GPS Permission Request' dialogue
+                    // Mostrar el cuadro de diálogo 'Solicitud de permiso de GPS'
                     AndroidPermissions.requestPermission(AndroidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
                         .then(
                             (result) => {
                                 if (result.hasPermission) {
-                                    // call method to turn on GPS
+                                    // llamada para encender el GPS
                                     resolve('GOT_PERMISSION');
                                 } else {
                                     resolve('DENIED_PERMISSION');
                                 }
                             },
                             error => {
-                                // Show alert if user click on 'No Thanks'
+                                // si el usuario elige 'No, gracias'
                                 alert('requestPermission Error requesting location permissions ' + error);
                             }
                         );
